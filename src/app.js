@@ -1,4 +1,5 @@
 const express = require('express');
+const validationLoginJWT = require('./controllers/login.control');
 
 // ...
 
@@ -11,6 +12,7 @@ app.get('/', (_request, response) => {
 
 app.use(express.json());
 
+app.post('/login', validationLoginJWT);
 // ...
 
 // É importante exportar a constante `app`,
