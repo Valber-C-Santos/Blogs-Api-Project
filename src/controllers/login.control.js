@@ -12,7 +12,6 @@ const validationLoginControlJWT = async (req, res) => {
       return res.status(400).json({ message: 'Some required fields are missing' });
     }
 
-    // Certifique-se de que você está chamando a função findEmail corretamente
     const userEmail = await loginService.findEmail(email);
 
     if (!userEmail || userEmail.password !== password) {
