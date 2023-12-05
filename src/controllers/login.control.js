@@ -18,7 +18,7 @@ const validationLoginControlJWT = async (req, res) => {
       return res.status(400).json({ message: 'Invalid fields' });
     }
     const jwtConfig = { expiresIn: '7d', algorithm: 'HS256' };
-    const loginAndPassword = { sub: userEmail.id, role: 'user' };
+    const loginAndPassword = { user: userEmail.id, reference: 'user' };
 
     const token = jwt.sign(loginAndPassword, key, jwtConfig);
 

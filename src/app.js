@@ -1,6 +1,7 @@
 const express = require('express');
-const validationLoginJWT = require('./controllers/login.control');
-
+const validationLoginControlJWT = require('./controllers/login.control');
+const { userControlJWT } = require('./controllers/user.control');
+const { isBodyValid } = require('./middlewares/user.middleware');
 // ...
 
 const app = express();
@@ -12,7 +13,8 @@ app.get('/', (_request, response) => {
 
 app.use(express.json());
 
-app.post('/login', validationLoginJWT);
+app.post('/login', validationLoginControlJWT);
+app.post('/user', isBodyValid, userControlJWT);
 // ...
 
 // É importante exportar a constante `app`,
