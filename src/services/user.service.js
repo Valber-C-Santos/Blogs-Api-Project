@@ -10,6 +10,16 @@ const createNewUser = async ({ displayName, email, password, image }) => {
   }
 };
 
+const findAllUser = async () => {
+  try {
+    const findall = await db.User.findAll({ attributes: { exclude: ['password'] } });
+    return findall;
+  } catch (error) {
+    console.error(error);
+  }
+};
+
 module.exports = { 
   createNewUser,
+  findAllUser,
 };

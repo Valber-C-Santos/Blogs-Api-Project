@@ -13,4 +13,20 @@ const userControlJWT = async (req, res) => {
   return res.status(201).json({ token });
 };
 
-module.exports = { userControlJWT };
+const takeAllUser = async (_req, res) => {
+  try {
+    const users = await userService.findAllUser();
+
+    if (users.length === 0) {
+      return res.status(404).json({ message: 'No users found' });
+    }
+
+    res.status(200).json(users);
+  } catch (err) {
+    console.error('Error retrieving users:', err);
+
+    res.status(500).json({ message: 'Internal Server Error' });
+  }
+};
+
+module.exports = { userControlJWT, takeAllUser };
