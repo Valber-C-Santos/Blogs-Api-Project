@@ -13,13 +13,26 @@ const createNewUser = async ({ displayName, email, password, image }) => {
 const findAllUser = async () => {
   try {
     const findall = await db.User.findAll({ attributes: { exclude: ['password'] } });
-    return findall;
+    return { status: 200, data: findall };
   } catch (error) {
     console.error(error);
+  }
+};
+
+const takeUserId = async (id) => {
+  try {
+    const takeId = await db.User.findOne({ where: { id }, attributes: { exclude: 'password' } });
+    if (!takeId) {
+      return { status: 404, data: { message: 'User does not exist' } };
+    }
+    return { status: 200, data: takeId };
+  } catch (error) {
+    console.error({ message: 'O erro esta aqui ' });
   }
 };
 
 module.exports = { 
   createNewUser,
   findAllUser,
+  takeUserId,
 };

@@ -1,4 +1,3 @@
-// src/auth/validateJWT.js
 const jwt = require('jsonwebtoken');
 
 const key = process.env.JWT_SECRET || 'seusecretdetoken';
@@ -14,8 +13,9 @@ const isValidToken = async (req, res, next) => {
     return res.status(401).json({ message: 'Token not found' });
   }
 
+  const token = extractToken(bearerToken);
+
   try {
-    const token = extractToken(bearerToken);
     const decoded = jwt.verify(token, key);
 
     req.user = decoded;

@@ -1,10 +1,10 @@
 const jwt = require('jsonwebtoken');
-const userService = require('../services/user.service');
+const { createNewUser, findAllUser, takeUserId } = require('../services/user.service');
 
 const key = process.env.JWT_SECRET || 'seusecretdetoken';
 
 const userControlJWT = async (req, res) => {
-  const user = await userService.createNewUser(req.body);
+  const user = await createNewUser(req.body);
   
   const jwtConfig = { expiresIn: '7d', algorithm: 'HS256' };
 
@@ -15,13 +15,13 @@ const userControlJWT = async (req, res) => {
 
 const takeAllUser = async (_req, res) => {
   try {
-    const users = await userService.findAllUser();
+    const { status, data } = await findAllUser();
 
-    if (users.length === 0) {
-      return res.status(404).json({ message: 'No users found' });
+    if (data.length === 0) {
+      return res.status(status).json({ message: 'No users found' });
     }
 
-    res.status(200).json(users);
+    res.status(status).json(data);
   } catch (err) {
     console.error('Error retrieving users:', err);
 
@@ -29,4 +29,10 @@ const takeAllUser = async (_req, res) => {
   }
 };
 
-module.exports = { userControlJWT, takeAllUser };
+const findUserId = async (req, res) => {
+  const { id } = req.params;
+  const { status, data } = await takeUserId(id);
+  return res.status(status).json(data);
+};
+
+module.exports = { userControlJWT, takeAllUser, findUserId };
