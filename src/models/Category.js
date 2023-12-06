@@ -17,7 +17,6 @@ const Category = (sequelize, DataTypes) => {
     underscored: true, 
   }
 );
-
 return Category;
 }
 
