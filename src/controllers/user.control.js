@@ -4,23 +4,18 @@ const { createNewUser, findAllUser, takeUserId } = require('../services/user.ser
 const key = process.env.JWT_SECRET || 'seusecretdetoken';
 
 const userControlJWT = async (req, res) => {
-  const user = await createNewUser(req.body);
-  
+  const user = await createNewUser(req.body); 
   const jwtConfig = { expiresIn: '7d', algorithm: 'HS256' };
-
   const token = jwt.sign({ user: { user } }, key, jwtConfig);
-
   return res.status(201).json({ token });
 };
 
 const takeAllUser = async (_req, res) => {
   try {
     const { status, data } = await findAllUser();
-
     if (data.length === 0) {
       return res.status(status).json({ message: 'No users found' });
     }
-
     res.status(status).json(data);
   } catch (err) {
     console.error('Error retrieving users:', err);
@@ -30,9 +25,13 @@ const takeAllUser = async (_req, res) => {
 };
 
 const findUserId = async (req, res) => {
-  const { id } = req.params;
-  const { status, data } = await takeUserId(id);
-  return res.status(status).json(data);
+  try {
+    const { id } = req.params;
+    const { status, data } = await takeUserId(id);
+    return res.status(status).json(data);
+  } catch (error) {
+    console.error({ message: 'O erro ta em findUserId' }); 
+  }
 };
 
 module.exports = { userControlJWT, takeAllUser, findUserId };
