@@ -1,10 +1,11 @@
 const express = require('express');
 const validationLoginControlJWT = require('./controllers/login.control');
 const { userControlJWT, takeAllUser, findUserId } = require('./controllers/user.control');
-const { createNewCategories } = require('./controllers/category.control');
+const { createNewCategories, takeAllCategories } = require('./controllers/category.control');
 const { isBodyValid } = require('./middlewares/user.middleware');
 const { isValidCategory } = require('./middlewares/category.middleware');
 const { isValidToken } = require('./middlewares/authentication.middleware');
+
 // ...
 
 const app = express();
@@ -21,6 +22,7 @@ app.post('/user', isBodyValid, userControlJWT);
 app.get('/user', isValidToken, takeAllUser);
 app.get('/user/:id', isValidToken, findUserId);
 app.post('/categories', isValidToken, isValidCategory, createNewCategories);
+app.get('/categories', isValidToken, takeAllCategories);
 // ...
 
 // É importante exportar a constante `app`,

@@ -1,4 +1,5 @@
 const { Category } = require('../models');
+const db = require('../models');
 
 const createNewCategory = async (name) => {
   try {
@@ -9,6 +10,16 @@ const createNewCategory = async (name) => {
   }
 };
 
+const findAllCategories = async () => {
+  try {
+    const findAll = db.Category.findAll();
+    return findAll;
+  } catch (error) {
+    console.error({ message: 'Erro no service' });
+  }
+};
+
 module.exports = {
   createNewCategory,
+  findAllCategories,
 };
