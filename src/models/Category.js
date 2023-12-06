@@ -1,4 +1,4 @@
-const CategoryModel = (sequelize, DataTypes) => {
+const Category = (sequelize, DataTypes) => {
   const Category = sequelize.define('Category', {
     id: {
       type: DataTypes.INTEGER,
@@ -12,8 +12,8 @@ const CategoryModel = (sequelize, DataTypes) => {
     },
   },
   {
-    timestamps: false,
     tableName: 'categories',
+    timestamps: false,
     underscored: true, 
   }
 );
@@ -21,4 +21,4 @@ const CategoryModel = (sequelize, DataTypes) => {
 return Category;
 }
 
-module.exports = CategoryModel;
+module.exports = Category;
