@@ -37,10 +37,10 @@ const inputPost = async ({ title, content, userId, categoryIds }) => {
       published: newDate, 
     }, { transaction: data });
 
-    const idPost = newPost.id;
+    const postId = newPost.dataValues.id;
 
     await Promise.all(categoryIds.map(async (categoryId) => {
-      await PostCategory.create({ idPost, categoryId }, { transaction: data }); 
+      await PostCategory.create({ postId, categoryId }, { transaction: data }); 
     }));
     return newPost;
   });

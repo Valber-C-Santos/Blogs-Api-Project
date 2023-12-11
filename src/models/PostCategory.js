@@ -1,19 +1,29 @@
 const PostCategory = (sequelize, DataTypes) => {
   const PostCategory = sequelize.define('PostCategory', {
     postId: {
-      type: DataTypes.INTEGER,
-      primaryKey: true,
       allowNull: false,
+      primaryKey: true,
+      type: DataTypes.INTEGER,
+      references: {
+        model: 'blog_posts',
+        key: 'id',
+      },
+      onDelete: 'CASCADE',
+      onUpdate: 'CASCADE',
     },
-
     categoryId: {
-      type: DataTypes.INTEGER,
-      primaryKey: true,
       allowNull: false,
-    },
-
-  }, {
-    tableName: 'post_categories',
+      primaryKey: true,
+      type: DataTypes.INTEGER,
+      references: {
+        model: 'categories',
+        key: 'id',
+      },
+      onDelete: 'CASCADE',
+      onUpdate: 'CASCADE',
+    }
+  },{
+    tableName: 'posts_categories',
     timestamps: false,
     underscored: true,
   });
